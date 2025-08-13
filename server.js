@@ -9,7 +9,7 @@ const app = express();
 // deberías restringirlo a la URL de tu frontend en Hostinger.
 const corsOptions = {
   // EJEMPLO PARA PRODUCCIÓN FINAL:
-  origin: 'https://ventas.izipetperu.com', 
+  origin: 'https://ventas.izipetperu.com', 'http://localhost:5173', 
   //origin: '*', // Déjalo así por ahora para probar fácilmente
   optionsSuccessStatus: 200
 };
