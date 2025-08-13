@@ -19,7 +19,16 @@ app.use(express.json());
 // --- CAMBIO 2: Conexión a la base de datos con Variables de Entorno ---
 // ¡NUNCA pongas credenciales directamente en el código!
 // Render te proporcionará una "Connection String" que pondremos en las variables de entorno.
-const db = await mysql.createPool(process.env.DATABASE_URL);
+//const db = await mysql.createPool(process.env.DATABASE_URL);
+const db = await mysql.createPool({
+				  host: process.env.DB_HOST,
+				  user: process.env.DB_USER,
+				  password: process.env.DB_PASSWORD,
+				  database: process.env.DB_NAME,
+				  waitForConnections: true,
+				  connectionLimit: 10,
+				  queueLimit: 0
+				});
 
 
 // ===== VENTAS =====
