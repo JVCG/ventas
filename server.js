@@ -4,15 +4,25 @@ import cors from 'cors';
 
 const app = express();
 
-// --- CAMBIO 1: Configuración de CORS más segura ---
-// Por ahora, para pruebas, puedes dejarlo abierto, pero antes de terminar,
-// deberías restringirlo a la URL de tu frontend en Hostinger.
+const allowedOrigins = [
+  'https://ventas.izipetperu.com', // Tu dominio de producción
+  'http://localhost:5173'          // Tu dominio de desarrollo local
+];
+
 const corsOptions = {
-  // EJEMPLO PARA PRODUCCIÓN FINAL:
-  origin: 'https://ventas.izipetperu.com', 'http://localhost:5173', 
-  //origin: '*', // Déjalo así por ahora para probar fácilmente
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'La política de CORS para este sitio no permite acceso desde el origen especificado.';
+      return callback(new Error(msg), false);
+    }
+    
+    return callback(null, true);
+  },
   optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
